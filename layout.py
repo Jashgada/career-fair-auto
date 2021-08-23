@@ -13,22 +13,19 @@ class Booth(object):
         self.isPremium = True
         self.isPower = True
     def show(self):
-        if(self.isPremium):
-            print(str(self.boothName) + 'is a premium booth')
-        else:
-            print(str(self.boothName) + 'is not a premium booth')
+        print(str(self.boothName))
 
 
-wb = load_workbook(filename = 'Booth Layout Spring 2020.xlsx')
 
-startrow = 3
-endrow = 21
-startcol = 3
-endcol = 58
-sheet_ranges = wb['Version 6']
-y = sheet_ranges.cell(column=3, row=5)
-print(type(y).__name__)
-print(y.value)
+wb = load_workbook(filename = 'CRC floor diagram 8x16 v1.xlsx')
+
+startrow = 26
+endrow = 73
+startcol = 4
+endcol = 30
+sheet_ranges = wb['Courts 3-6 only']
+boothArr = []
+
 for col in range(startcol, endcol+1):
     for row in range(startrow, endrow + 1):
         # print(sheet_ranges.cell(column=col, row=row).value)
@@ -36,14 +33,20 @@ for col in range(startcol, endcol+1):
         # print(type(cell).__name__)
         if(str(cell.value) != 'None'):
             booth = Booth(cell.value)
-            if str(cell.value)>='A' and str(cell.value) <='Z':
+            if len(booth.boothName)>=3 and booth.boothName[2]=='P':
                 booth.isPremium = True
-            booth.show()
+            boothArr = boothArr + [booth]
+boothHash= {}
+for b in boothArr:
+    if not (b.boothName[1:] in boothHash):
+        if b.boothName[-1] == 'P':
+            if b.boothName[1:3] in boothHash:
+                # Add booth number to 
+
+
             
             
-            
-            
-print("end of for loop")
+
 
 
 # sheet_ranges.unmerge_cells('C5:D6')
